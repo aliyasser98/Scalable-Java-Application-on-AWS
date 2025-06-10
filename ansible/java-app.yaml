@@ -1,0 +1,13 @@
+
+- name: Intall Java application
+  hosts: all
+  become: true
+
+  vars:
+    source_dir: "files"
+    dest_dir: /home/ubuntu/
+    files:
+      - app_properties.py
+      - start.sh
+  roles:
+    - Java

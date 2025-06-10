@@ -1,0 +1,91 @@
+  - name: Update and upgrade apt packages
+    become: true
+    apt:
+        upgrade: yes
+        update_cache: yes
+
+  - name: Install JRE
+    become: true
+    apt:
+      name: openjdk-17-jre
+      state: latest
+
+  - name: Create log file
+    file:
+        path: /var/log/petclinic.log
+        state: touch
+        mode: '0777'
+
+  - name: Install Python3, pip3
+    become: true
+    apt:
+      name: "{{ item }}"
+      state: present
+    loop:
+      - python3
+      - python3-pip
+
+  - name: Install AWS CLI using pip3 with override
+    become: true
+    command: pip3 install awscli --break-system-packages
+
+  - name: Install boto3 using pip3 with  override
+    become: true
+    command: pip3 install boto3 --break-system-packages
+
+  - name: Check operating system
+    debug:
+      msg: "The operating system is {{ ansible_facts['os_family'] }}"
+    when: ansible_facts['os_family'] == "Debian"
+  
+  - name: Install Nginx on Server
+    apt: 
+      name: nginx 
+      state: latest
+  
+  - name: Copy Nginx Index HTML 
+    template:
+      src: index.html
+      dest: /var/www/html/index.html 
+  
+  - name: Start and enable a service
+    service:
+      name: nginx
+      state: started
+      enabled: yes
+
+  - name: Downloading packages
+    command: wget https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb
+
+  - name: Install CloudWatch
+    command: dpkg -i amazon-cloudwatch-agent.deb
+      
+  - name: Create CloudWatch Agent configuration file
+    template:
+      src: config.json
+      dest: /opt/aws/amazon-cloudwatch-agent/bin/config.json
+
+  - name: Install collectd
+    apt:
+      name: collectd
+      state: latest
+
+  - name: Start CloudWatch
+    command: amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json -s
+
+  - name: Copy files
+    copy:
+      src: "{{ source_dir }}/{{ item }}"
+      dest: "{{ dest_dir }}/{{ item }}"
+    loop: "{{ files }}"
+
+  - name: Copy files
+    copy:
+      src: files/application.properties
+      dest: /opt/application.properties
+
+  - name: Make start.sh script executable
+    become: true
+    file:
+      path: /home/ubuntu/start.sh
+      mode: '+x'
