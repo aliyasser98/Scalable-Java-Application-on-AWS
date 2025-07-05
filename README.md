@@ -4,9 +4,6 @@
 
 This project demonstrates how to set up a scalable Java application on AWS using DevOps tools and infrastructure as code (IaC) practices. The architecture includes an **Auto Scaling Group (ASG)**, **Application Load Balancer (ALB)**, and **RDS database**, all provisioned using Terraform, with Packer and Ansible used to build a pre-configured AMI.
 
-## 🧱 Architecture Design 
-![Design Diagram](src/design.png)
-
 ## Prerequisites 
 **Before you begin, ensure the following tools are installed on your local machine:**
 - Packer  - To building Customized Java Application AMI
