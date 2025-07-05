@@ -148,10 +148,4 @@ terraform init
 terraform plan --var-file=tf.tfvars
 terraform apply --var-file=tf.tfvars --auto-approve
 ```
-Step 5: Access your application in the browser using the load-balancer DNS as shown below.
-```bash
-cd terraform/environments/dev
-terraform init
-terraform plan --var-file=tf.tfvars
-terraform apply --var-file=tf.tfvars --auto-approve
-```
+Step 5: Access your application in the browser using the load-balancer DNS through port 80
