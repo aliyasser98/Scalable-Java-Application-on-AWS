@@ -1,1 +1,6 @@
-spring-petclinic-3.4.0-SNAPSHOT.jar
+spring-petclinic-3.1.0-SNAPSHOT.jar
+**/.terraform/
+**/.terraform.lock.hcl
+**/terraform.tfstate
+**/terraform.tfstate.backup
+**/tf.tfvars
