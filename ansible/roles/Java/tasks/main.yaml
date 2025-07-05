@@ -24,7 +24,6 @@
     loop:
       - python3
       - python3-pip
-
   - name: Install AWS CLI using pip3 with override
     become: true
     command: pip3 install awscli --break-system-packages
@@ -45,7 +44,7 @@
   
   - name: Copy Nginx Index HTML 
     template:
-      src: index.html
+      src: index.html.j2
       dest: /var/www/html/index.html 
   
   - name: Start and enable a service
@@ -62,7 +61,7 @@
       
   - name: Create CloudWatch Agent configuration file
     template:
-      src: config.json
+      src: config.json.j2
       dest: /opt/aws/amazon-cloudwatch-agent/bin/config.json
 
   - name: Install collectd

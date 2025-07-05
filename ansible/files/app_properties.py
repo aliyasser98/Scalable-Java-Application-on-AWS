@@ -3,7 +3,7 @@ secret_name_tag = 'dev-rds-db'
 ssm = boto3.client('ssm', region_name='us-east-1')
 secrets_client = boto3.client('secretsmanager', region_name='us-east-1')
 FILE_PATH = "/opt/application.properties"
-rds_endpoint = ssm.get_parameter(Name='id_rsa')['Parameter']['Value']
+rds_endpoint = ssm.get_parameter(Name='/java/dev/rds_endpoint')['Parameter']['Value']
 secrets_list = secrets_client.list_secrets()
 secret_arn = None
 for secret in secrets_list['SecretList']:

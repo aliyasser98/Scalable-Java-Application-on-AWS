@@ -9,5 +9,6 @@
     files:
       - app_properties.py
       - start.sh
+      - spring-petclinic-3.1.0-SNAPSHOT.jar
   roles:
     - Java

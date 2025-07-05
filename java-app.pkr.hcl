@@ -4,6 +4,14 @@ packer {
         version = ">= 1.1.1"
         source  = "github.com/hashicorp/docker"
         }
+        ansible = {
+        version = ">= 1.0.4"
+        source  = "github.com/hashicorp/ansible"
+        }
+        amazon = {
+        version = ">= 1.1.1"
+        source  = "github.com/hashicorp/amazon"
+        }
     }
 }
 variable "app_version" {
@@ -17,7 +25,7 @@ source "amazon-ebs" "java-app" {
     ami_name      = "java-app-${var.app_version}"
     instance_type = "t2.micro"
     region        = "us-east-1"
-    source_ami    = "ami-084568db4383264d4"
+    source_ami    = "ami-020cba7c55df1f615"
     ssh_username  = "ubuntu"
     tags = {
         Name = local.app_name
@@ -29,8 +37,5 @@ build {
     ]
     provisioner "ansible" {
         playbook_file = "ansible/java-app.yaml"
-        extra_arguments = [
-            "--extra-vars", "app_version=${var.app_version}"
-        ]
     }
 }
